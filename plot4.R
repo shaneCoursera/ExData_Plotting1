@@ -1,11 +1,11 @@
 plot4 <- function() {
     
+    # read the file and setup DateTime field
     powerFile <- "household_power_consumption.txt"
-    
     power <- read.table(powerFile, header=TRUE, sep=";", na.strings ="?")
-    
     power$DateTime <- strptime(paste(power$Date, ' ', power$Time), '%d/%m/%Y %H:%M:%S')
     
+    png(file="plot4.png")
     par(mfrow = c(2,2))
     
     with(power, {
@@ -19,8 +19,6 @@ plot4 <- function() {
         
         plot(DateTime, Global_reactive_power, type="l", lty=1, xlab="datetime", ylab="Global_reactive_power")
     })
-    
-    dev.copy(png, file="plot4.png")
     
     dev.off()
 }
