@@ -2,7 +2,8 @@ plot4 <- function() {
     
     # read the file and setup DateTime field
     powerFile <- "household_power_consumption.txt"
-    power <- read.table(powerFile, header=TRUE, sep=";", na.strings ="?")
+    rawPower <- read.table(powerFile, header=TRUE, sep=";", na.strings ="?")
+    power <- rawPower[(rawPower$Date == "1/2/2007") | (rawPower$Date == "2/2/2007"), ]
     power$DateTime <- strptime(paste(power$Date, ' ', power$Time), '%d/%m/%Y %H:%M:%S')
     
     png(file="plot4.png")
@@ -10,6 +11,7 @@ plot4 <- function() {
     
     with(power, {
         plot(DateTime, Global_active_power, type="l", lty=1, xlab="", ylab="Global Active Power")
+        
         plot(DateTime, Voltage, type="l", lty=1, xlab="datetime", ylab="Voltage")
         
         plot(DateTime, Sub_metering_1,  type="l", xlab="", ylab="Energy sub metering")

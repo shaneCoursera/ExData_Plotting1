@@ -2,9 +2,10 @@ plot3 <- function() {
     
     # read the file and setup DateTime field
     powerFile <- "household_power_consumption.txt"
-    power <- read.table(powerFile, header=TRUE, sep=";", na.strings ="?")
+    rawPower <- read.table(powerFile, header=TRUE, sep=";", na.strings ="?")
+    power <- rawPower[(rawPower$Date == "1/2/2007") | (rawPower$Date == "2/2/2007"), ]
     power$DateTime <- strptime(paste(power$Date, ' ', power$Time), '%d/%m/%Y %H:%M:%S')
-    
+
     png(file="plot3.png")
     par(mfrow = c(1,1))    
 
